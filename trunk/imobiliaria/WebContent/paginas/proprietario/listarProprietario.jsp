@@ -57,7 +57,7 @@
 
 				<div id="content" class="left_content">
 					Telefone:
-					<%=proprietario.getTelefone()%>
+					<%=proprietario.getContatosProprietario()%>
 				</div>
 
 			</div>

@@ -57,7 +57,7 @@
 
 				<div id="content" class="left_content">
 					Telefone:
-					<%=cliente.getTelefone()%>
+					<%=cliente.getContatosCliente()%>
 				</div>
 
 			</div>
