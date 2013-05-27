@@ -5,6 +5,22 @@
 <html>
 <link rel="stylesheet" type="text/css" href="./paginas/css/template.css">
 
+<script type="text/javascript">
+	function editar(cod) {
+		window.location.href = "/imobiliaria/controller.do?acao=ImovelEditarView&id="
+				+ cod;
+	}
+</script>
+
+<script type="text/javascript">
+	function confirmExclusao(cod) {
+		if (confirm("Tem certeza que deseja excluir esse imovel?")) {
+			window.location.href = "/imobiliaria/controller.do?acao=ImovelRemover&id="
+					+ cod;
+		}
+	}
+</script>
+
 <form method="post" action="controller.do?acao=ImovelConsultar">
 
 	<body>
@@ -83,12 +99,11 @@
 
 	</div>
 	<div id="content" class="left_content">
-		<a
-			href="controller.do?acao=ImovelEditarView&codigo=<%=imovel.getId_imovel()%>">
-			Editar Imovel</a> <a
-			href="controller.do?acao=ImovelRemover&codigo=<%=imovel.getId_imovel()%>">
-			Remover Imovel</a>
-	</div>
+			<input type="button" value="Editar"
+				onclick="editar(<%=imovel.getId_imovel()%>)" /> <input
+				type="button" value="Excluir" class="FormBotao"
+				onclick="confirmExclusao(<%=imovel.getId_imovel()%>)" />
+		</div>
 	<br>
 	<%
 		}
