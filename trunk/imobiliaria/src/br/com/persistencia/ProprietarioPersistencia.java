@@ -118,8 +118,8 @@ public class ProprietarioPersistencia {
 			BancoDeDadosManager bdm = new BancoDeDadosManager();
 			Connection con = bdm.getConexao();
 
-			String id = "select * from proprietario where nome like '%" + nome
-					+ "%'";
+			String id = "select * from proprietario where lower(nome) like lower('%" + nome
+					+ "%')";
 
 			Statement s = con.createStatement();
 			ResultSet rs = s.executeQuery(id);
@@ -231,7 +231,28 @@ public class ProprietarioPersistencia {
 				proprietario.setCpf(rs.getString("cpf"));
 				proprietario.setEndereco(rs.getString("endereco"));
 
+				ArrayList<ContatoProprietario> contatos = new ArrayList<ContatoProprietario>();
+				String id2 = "select * from contato_proprietario where proprietario_id_proprietario = "
+						+ proprietario.getId_proprietario();
+
+				Statement s2 = con.createStatement();
+				ResultSet rs2 = s2.executeQuery(id2);
+				while (rs2.next()) {
+					ContatoProprietario contato = new ContatoProprietario();
+					contato.setIdContatoProprietario(Integer.parseInt(rs2
+							.getString("id_contato_proprietario")));
+					contato.setIdProprietario(proprietario.getId_proprietario());
+					contato.setDescricao(rs2.getString("descricao"));
+
+					contatos.add(contato);
+
+					lista.add(proprietario);
+				}
+				
+				proprietario.setContatosProprietario(contatos);
 				lista.add(proprietario);
+				s2.close();
+				
 			}
 			con.close();
 			s.close();
@@ -276,7 +297,7 @@ public class ProprietarioPersistencia {
 
 			String sql = "update proprietario set cpf = '" + proprietario.getCpf()
 					+ "', nome = '" + proprietario.getNome() + "', endereco = '"
-					+ proprietario.getEndereco() + "' where id_cliente = '"
+					+ proprietario.getEndereco() + "' where id_proprietario = '"
 					+ proprietario.getId_proprietario() + "'";
 			System.out.println(sql);
 			Statement s = con.createStatement();
