@@ -56,7 +56,7 @@ public class ClientePersistencia {
 		con.close();
 		s.close();
 		st.close();
-		
+
 	}
 
 	public List<Cliente> consultaCod(int id_cliente) {
@@ -78,24 +78,24 @@ public class ClientePersistencia {
 				cliente.setNome(rs.getString("nome"));
 				cliente.setCpf(rs.getString("cpf"));
 				cliente.setEndereco(rs.getString("endereco"));
-				
+
 				ArrayList<ContatoCliente> contatos = new ArrayList<ContatoCliente>();
-				String id2 = "select * from contato_cliente where cliente_id_cliente = " 
+				String id2 = "select * from contato_cliente where cliente_id_cliente = "
 						+ cliente.getId_cliente();
-				
+
 				Statement s2 = con.createStatement();
 				ResultSet rs2 = s2.executeQuery(id2);
-				while(rs2.next()) {
+				while (rs2.next()) {
 					ContatoCliente contato = new ContatoCliente();
 					contato.setIdContatoCliente(Integer.parseInt(rs2
 							.getString("id_contato_cliente")));
 					contato.setIdCliente(cliente.getId_cliente());
 					contato.setDescricao(rs2.getString("descricao"));
-					
+
 					contatos.add(contato);
 				}
-	
-				cliente.setContatosCliente(contatos);				
+
+				cliente.setContatosCliente(contatos);
 				clientes.add(cliente);
 				s2.close();
 			}
@@ -116,8 +116,8 @@ public class ClientePersistencia {
 			BancoDeDadosManager bdm = new BancoDeDadosManager();
 			Connection con = bdm.getConexao();
 
-			String id = "select * from cliente where nome like '%" + nome
-					+ "%'";
+			String id = "select * from cliente where lower(nome) like lower('%"
+					+ nome + "%')";
 
 			Statement s = con.createStatement();
 			ResultSet rs = s.executeQuery(id);
@@ -128,24 +128,24 @@ public class ClientePersistencia {
 				cliente.setNome(rs.getString("nome"));
 				cliente.setCpf(rs.getString("cpf"));
 				cliente.setEndereco(rs.getString("endereco"));
-				
+
 				ArrayList<ContatoCliente> contatos = new ArrayList<ContatoCliente>();
-				String id2 = "select * from contato_cliente where cliente_id_cliente = " 
+				String id2 = "select * from contato_cliente where cliente_id_cliente = "
 						+ cliente.getId_cliente();
-				
+
 				Statement s2 = con.createStatement();
 				ResultSet rs2 = s2.executeQuery(id2);
-				while(rs2.next()) {
+				while (rs2.next()) {
 					ContatoCliente contato = new ContatoCliente();
 					contato.setIdContatoCliente(Integer.parseInt(rs2
 							.getString("id_contato_cliente")));
 					contato.setIdCliente(cliente.getId_cliente());
 					contato.setDescricao(rs2.getString("descricao"));
-					
+
 					contatos.add(contato);
 				}
-	
-				cliente.setContatosCliente(contatos);				
+
+				cliente.setContatosCliente(contatos);
 				clientes.add(cliente);
 				s2.close();
 			}
@@ -178,24 +178,24 @@ public class ClientePersistencia {
 				cliente.setNome(rs.getString("nome"));
 				cliente.setCpf(rs.getString("cpf"));
 				cliente.setEndereco(rs.getString("endereco"));
-			
+
 				ArrayList<ContatoCliente> contatos = new ArrayList<ContatoCliente>();
-				String id2 = "select * from contato_cliente where cliente_id_cliente = " 
+				String id2 = "select * from contato_cliente where cliente_id_cliente = "
 						+ cliente.getId_cliente();
-				
+
 				Statement s2 = con.createStatement();
 				ResultSet rs2 = s2.executeQuery(id2);
-				while(rs2.next()) {
+				while (rs2.next()) {
 					ContatoCliente contato = new ContatoCliente();
 					contato.setIdContatoCliente(Integer.parseInt(rs2
 							.getString("id_contato_cliente")));
 					contato.setIdCliente(cliente.getId_cliente());
 					contato.setDescricao(rs2.getString("descricao"));
-					
+
 					contatos.add(contato);
 				}
-	
-				cliente.setContatosCliente(contatos);				
+
+				cliente.setContatosCliente(contatos);
 				clientes.add(cliente);
 				s2.close();
 			}
@@ -227,7 +227,28 @@ public class ClientePersistencia {
 				cliente.setCpf(rs.getString("cpf"));
 				cliente.setEndereco(rs.getString("endereco"));
 
+				ArrayList<ContatoCliente> contatos = new ArrayList<ContatoCliente>();
+				String id2 = "select * from contato_cliente where cliente_id_cliente = "
+						+ cliente.getId_cliente();
+
+				Statement s2 = con.createStatement();
+				ResultSet rs2 = s2.executeQuery(id2);
+				while (rs2.next()) {
+					ContatoCliente contato = new ContatoCliente();
+					contato.setIdContatoCliente(Integer.parseInt(rs2
+							.getString("id_contato_cliente")));
+					contato.setIdCliente(cliente.getId_cliente());
+					contato.setDescricao(rs2.getString("descricao"));
+
+					contatos.add(contato);
+
+					lista.add(cliente);
+				}
+				
+				cliente.setContatosCliente(contatos);
 				lista.add(cliente);
+				s2.close();
+				
 			}
 			con.close();
 			s.close();
@@ -245,12 +266,12 @@ public class ClientePersistencia {
 			Connection con = bdm.getConexao();
 
 			Statement s = con.createStatement();
-			
+
 			String sql = "delete from contato_cliente where cliente_id_cliente = '"
 					+ id_cliente + "'";
-			
+
 			s.executeUpdate(sql);
-			
+
 			String sql2 = "delete from cliente where id_cliente = '"
 					+ id_cliente + "'";
 

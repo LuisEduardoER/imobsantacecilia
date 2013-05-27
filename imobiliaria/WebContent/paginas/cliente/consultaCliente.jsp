@@ -37,15 +37,15 @@
 		<div>
 			<div id="content" class="left_content">
 				Procurar: <input id="busca" name="busca" type="text" size="40">
-				<select
-					name="TipoBuscaCliente">
+				<select name="TipoBuscaCliente">
 					<%
 						for (TipoBuscaCliente t : TipoBuscaCliente.values()) {
 					%>
-						<option value="<%=t%>"><%=t%></option>
-					<% } %>
-				</select>
-				<input type="submit" value="Consultar" />
+					<option value="<%=t%>"><%=t%></option>
+					<%
+						}
+					%>
+				</select> <input type="submit" value="Consultar" />
 			</div>
 		</div>
 
@@ -97,8 +97,15 @@
 			</div>
 
 			<div id="content" class="left_content">
+				<%
+					if (cliente.getContatosCliente().size() > 0) {
+				%>
 				Telefone:
-				<%=cliente.getContatosCliente().get(0).getDescricao()%>
+				<%=cliente.getContatosCliente().get(0)
+								.getDescricao()%>
+				<%
+					}
+				%>
 			</div>
 
 		</div>

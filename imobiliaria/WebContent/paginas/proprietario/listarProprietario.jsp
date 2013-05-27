@@ -56,8 +56,15 @@
 				</div>
 
 				<div id="content" class="left_content">
+					<%
+						if (proprietario.getContatosProprietario().size() > 0) {
+					%>
 					Telefone:
-					<%=proprietario.getContatosProprietario()%>
+					<%=proprietario.getContatosProprietario().get(0)
+							.getDescricao()%>
+					<%
+						}
+					%>
 				</div>
 
 			</div>

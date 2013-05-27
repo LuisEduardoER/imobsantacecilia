@@ -56,8 +56,15 @@
 				</div>
 
 				<div id="content" class="left_content">
+					<%
+						if (cliente.getContatosCliente().size() > 0) {
+					%>
 					Telefone:
-					<%=cliente.getContatosCliente()%>
+					<%=cliente.getContatosCliente().get(0)
+							.getDescricao()%>
+					<%
+						}
+					%>
 				</div>
 
 			</div>
